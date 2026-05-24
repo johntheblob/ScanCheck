@@ -2,11 +2,9 @@
   "manifest_version": 2,
   "name": "ScanCheck",
   "version": "1.0",
-  "description": "Scans websites for phishing and suspicious activity.",
+  "description": "Real-time website safety scanner",
 
   "permissions": [
-    "activeTab",
-    "tabs",
     "<all_urls>"
   ],
 
