@@ -1,5 +1,7 @@
 let warningVisible = false;
 
+const API_URL = "https://DIN-RENDER-URL.onrender.com/scan";
+
 // SHIFT + G TEST
 document.addEventListener("keydown", (e) => {
   if (e.shiftKey && e.key.toLowerCase() === "g") {
@@ -7,22 +9,39 @@ document.addEventListener("keydown", (e) => {
   }
 });
 
-// AUTO SCAN
-const text = document.body.innerText.toLowerCase();
+// SKICKA TILL API
+async function scanPage() {
+  try {
+    const text = document.body.innerText.slice(0, 3000);
 
-const badWords = ["free money", "bitcoin", "verify your account"];
+    const res = await fetch(API_URL, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({ text })
+    });
 
-for (const w of badWords) {
-  if (text.includes(w)) {
-    showDanger("Content Scan", w);
-    break;
+    const data = await res.json();
+
+    if (data.risk === "danger") {
+      showDanger("ScanCheck Cloud", data.reason);
+    } else {
+      showSafe();
+    }
+
+  } catch (err) {
+    console.log("ScanCheck API error:", err);
+    showSafe();
   }
 }
 
 // SAFE BADGE
-if (!warningVisible) {
+function showSafe() {
+  if (warningVisible) return;
+
   const badge = document.createElement("div");
-  badge.innerText = "🟢 ScanCheck SAFE";
+  badge.innerText = "🟢 ScanCheck SAFE (Cloud)";
   badge.style = `
     position:fixed;
     bottom:20px;
@@ -67,14 +86,13 @@ function showDanger(source, reason) {
       <p><b>Source:</b> ${source}</p>
       <p><b>Detected:</b> ${reason}</p>
 
-      <button id="leave" style="margin:10px;padding:10px;">Leave Site</button>
-      <button id="ignore" style="margin:10px;padding:10px;">Ignore</button>
+      <button id="leave">Leave Site</button>
+      <button id="ignore">Ignore</button>
     </div>
   `;
 
   document.body.appendChild(overlay);
 
-  // AUTO BLOCK (leave)
   document.getElementById("leave").onclick = () => {
     window.location.href = "https://google.com";
   };
@@ -84,3 +102,6 @@ function showDanger(source, reason) {
     warningVisible = false;
   };
 }
+
+// START SCAN
+scanPage();
