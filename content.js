@@ -5,7 +5,7 @@ let warningVisible = false;
 // SHIFT + G TEST MODE
 document.addEventListener("keydown", (e) => {
   if (e.shiftKey && e.key.toLowerCase() === "g") {
-    showDanger("Manual Test", "Shift+G triggered popup");
+    showDanger("Manual Test", "Shift+G triggered ScanCheck");
   }
 });
 
@@ -43,7 +43,7 @@ async function scanPage() {
   }
 }
 
-// SAFE BADGE
+// 🟢 SAFE BADGE
 function showSafe() {
   if (document.getElementById("scancheck-safe")) return;
 
@@ -60,52 +60,42 @@ function showSafe() {
     color:white;
     padding:10px 14px;
     border-radius:12px;
-    font-family:Arial;
+    font-family:-apple-system,BlinkMacSystemFont,Segoe UI;
     z-index:999999;
-    box-shadow:0 4px 10px rgba(0,0,0,0.2);
+    box-shadow:0 10px 30px rgba(0,0,0,0.25);
   `;
 
   document.body.appendChild(badge);
 }
 
-// DANGER POPUP
+// ⚠️ LIQUID GLASS DANGER POPUP
 function showDanger(source, reason) {
   if (warningVisible) return;
   warningVisible = true;
 
   const overlay = document.createElement("div");
-
-  overlay.style = `
-    position:fixed;
-    top:0;left:0;
-    width:100%;height:100%;
-    background:rgba(0,0,0,0.75);
-    z-index:9999999;
-    display:flex;
-    justify-content:center;
-    align-items:center;
-    font-family:Arial;
-  `;
+  overlay.className = "scancheck-overlay";
 
   overlay.innerHTML = `
-    <div style="
-      background:white;
-      padding:25px;
-      border-radius:16px;
-      width:420px;
-      text-align:center;
-    ">
-      <h2 style="color:red;">⚠ ScanCheck Alert</h2>
-      <p><b>Source:</b> ${source}</p>
-      <p><b>Detected:</b> ${reason}</p>
+    <div class="scancheck-glass">
 
-      <button id="leave" style="margin:10px;padding:10px 14px;">
-        Leave Site
-      </button>
+      <div class="scancheck-header">
+        <div class="scancheck-icon">⚠</div>
+        <h2>ScanCheck Alert</h2>
+      </div>
 
-      <button id="ignore" style="margin:10px;padding:10px 14px;">
-        Ignore
-      </button>
+      <p class="scancheck-subtitle">Potential threat detected</p>
+
+      <div class="scancheck-info">
+        <div><b>Source:</b> ${source}</div>
+        <div><b>Detected:</b> ${reason}</div>
+      </div>
+
+      <div class="scancheck-buttons">
+        <button class="danger-btn" id="leave">Leave Site</button>
+        <button class="safe-btn" id="ignore">Continue</button>
+      </div>
+
     </div>
   `;
 
