@@ -1,15 +1,17 @@
+const API_URL = "https://scancheck-api.onrender.com/scan";
+
 let warningVisible = false;
 
-const API_URL = "https://DIN-RENDER-URL.onrender.com/scan";
-
-// SHIFT + G TEST
+// SHIFT + G TEST MODE
 document.addEventListener("keydown", (e) => {
   if (e.shiftKey && e.key.toLowerCase() === "g") {
-    showDanger("MANUAL TEST", "Shift+G triggered ScanCheck popup");
+    showDanger("Manual Test", "Shift+G triggered popup");
   }
 });
 
-// SKICKA TILL API
+// START SCAN
+scanPage();
+
 async function scanPage() {
   try {
     const text = document.body.innerText.slice(0, 3000);
@@ -19,8 +21,13 @@ async function scanPage() {
       headers: {
         "Content-Type": "application/json"
       },
-      body: JSON.stringify({ text })
+      body: JSON.stringify({
+        text,
+        url: window.location.href
+      })
     });
+
+    if (!res.ok) throw new Error("API failed");
 
     const data = await res.json();
 
@@ -31,17 +38,20 @@ async function scanPage() {
     }
 
   } catch (err) {
-    console.log("ScanCheck API error:", err);
+    console.log("ScanCheck error:", err);
     showSafe();
   }
 }
 
 // SAFE BADGE
 function showSafe() {
-  if (warningVisible) return;
+  if (document.getElementById("scancheck-safe")) return;
 
   const badge = document.createElement("div");
-  badge.innerText = "🟢 ScanCheck SAFE (Cloud)";
+  badge.id = "scancheck-safe";
+
+  badge.innerText = "🟢 ScanCheck SAFE";
+
   badge.style = `
     position:fixed;
     bottom:20px;
@@ -52,7 +62,9 @@ function showSafe() {
     border-radius:12px;
     font-family:Arial;
     z-index:999999;
+    box-shadow:0 4px 10px rgba(0,0,0,0.2);
   `;
+
   document.body.appendChild(badge);
 }
 
@@ -62,6 +74,7 @@ function showDanger(source, reason) {
   warningVisible = true;
 
   const overlay = document.createElement("div");
+
   overlay.style = `
     position:fixed;
     top:0;left:0;
@@ -86,8 +99,13 @@ function showDanger(source, reason) {
       <p><b>Source:</b> ${source}</p>
       <p><b>Detected:</b> ${reason}</p>
 
-      <button id="leave">Leave Site</button>
-      <button id="ignore">Ignore</button>
+      <button id="leave" style="margin:10px;padding:10px 14px;">
+        Leave Site
+      </button>
+
+      <button id="ignore" style="margin:10px;padding:10px 14px;">
+        Ignore
+      </button>
     </div>
   `;
 
@@ -102,6 +120,3 @@ function showDanger(source, reason) {
     warningVisible = false;
   };
 }
-
-// START SCAN
-scanPage();
