@@ -1,3 +1,125 @@
-body {
-  font-family: Arial;
+.scancheck-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  background: rgba(10, 10, 20, 0.45);
+  backdrop-filter: blur(18px);
+  -webkit-backdrop-filter: blur(18px);
+
+  z-index: 9999999;
+}
+
+.scancheck-glass {
+  width: 420px;
+  padding: 24px;
+
+  border-radius: 22px;
+
+  background: rgba(255, 255, 255, 0.08);
+  backdrop-filter: blur(25px);
+  -webkit-backdrop-filter: blur(25px);
+
+  border: 1px solid rgba(255, 255, 255, 0.2);
+
+  box-shadow:
+    0 20px 60px rgba(0, 0, 0, 0.5),
+    inset 0 1px 0 rgba(255, 255, 255, 0.2);
+
+  color: white;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto;
+  animation: pop 0.25s ease-out;
+}
+
+.scancheck-header {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.scancheck-icon {
+  width: 34px;
+  height: 34px;
+  border-radius: 10px;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  background: rgba(255, 80, 80, 0.25);
+  border: 1px solid rgba(255, 80, 80, 0.4);
+
+  font-size: 18px;
+}
+
+.scancheck-glass h2 {
+  margin: 0;
+  font-size: 20px;
+}
+
+.scancheck-subtitle {
+  margin-top: 8px;
+  opacity: 0.7;
+  font-size: 13px;
+}
+
+.scancheck-info {
+  margin-top: 14px;
+  padding: 12px;
+
+  border-radius: 14px;
+
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+
+  font-size: 13px;
+}
+
+.scancheck-buttons {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 18px;
+}
+
+.danger-btn {
+  background: rgba(255, 60, 60, 0.85);
+  border: none;
+  color: white;
+
+  padding: 10px 14px;
+  border-radius: 12px;
+
+  cursor: pointer;
+  flex: 1;
+  margin-right: 8px;
+}
+
+.safe-btn {
+  background: rgba(255, 255, 255, 0.12);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+
+  color: white;
+
+  padding: 10px 14px;
+  border-radius: 12px;
+
+  cursor: pointer;
+  flex: 1;
+}
+
+@keyframes pop {
+  from {
+    transform: scale(0.9);
+    opacity: 0;
+  }
+  to {
+    transform: scale(1);
+    opacity: 1;
+  }
 }
