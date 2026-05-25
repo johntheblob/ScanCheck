@@ -1,0 +1,31 @@
+body {
+  width: 280px;
+
+  background: #0f172a;
+  color: white;
+
+  font-family: -apple-system, BlinkMacSystemFont, sans-serif;
+
+  margin: 0;
+  padding: 16px;
+}
+
+h1 {
+  margin-top: 0;
+}
+
+.status {
+  padding: 10px;
+  border-radius: 12px;
+
+  text-align: center;
+  margin-bottom: 16px;
+}
+
+.safe {
+  background: #16a34a;
+}
+
+.section {
+  margin-top: 12px;
+}
