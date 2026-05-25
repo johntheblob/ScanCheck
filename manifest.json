@@ -1,8 +1,10 @@
 {
   "manifest_version": 3,
+
   "name": "ScanCheck",
   "version": "3.0",
-  "description": "Advanced phishing & malware detection for Firefox.",
+
+  "description": "Advanced phishing & malware protection",
 
   "permissions": [
     "storage",
@@ -16,7 +18,7 @@
   ],
 
   "background": {
-    "service_worker": "background.js"
+    "scripts": ["background.js"]
   },
 
   "action": {
