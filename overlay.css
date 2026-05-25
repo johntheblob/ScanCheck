@@ -1,40 +1,66 @@
 .scancheck-overlay {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
+  border-radius: 10px;
 
   display: flex;
   justify-content: center;
   align-items: center;
 
-  background: rgba(10, 10, 20, 0.45);
-  backdrop-filter: blur(18px);
-  -webkit-backdrop-filter: blur(18px);
-
-  z-index: 9999999;
+  background: rgba(255,80,80,0.2);
 }
 
-.scancheck-glass {
-  width: 420px;
-  padding: 24px;
+.scancheck-subtitle {
+  margin-top: 8px;
+  opacity: 0.75;
+}
 
-  border-radius: 22px;
+.scancheck-info {
+  margin-top: 16px;
 
-  background: rgba(255, 255, 255, 0.08);
-  backdrop-filter: blur(25px);
-  -webkit-backdrop-filter: blur(25px);
+  padding: 14px;
+  border-radius: 14px;
 
-  border: 1px solid rgba(255, 255, 255, 0.2);
+  background: rgba(255,255,255,0.06);
+}
 
-  box-shadow:
-    0 20px 60px rgba(0, 0, 0, 0.5),
-    inset 0 1px 0 rgba(255, 255, 255, 0.2);
+.scancheck-buttons {
+  display: flex;
+  gap: 10px;
+  margin-top: 18px;
+}
 
+.danger-btn,
+.safe-btn {
+  flex: 1;
+
+  border: none;
+  padding: 12px;
+
+  border-radius: 14px;
+
+  cursor: pointer;
+}
+
+.danger-btn {
+  background: rgba(255,80,80,0.9);
   color: white;
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto;
-  animation: pop 0.25s ease-out;
+}
+
+.safe-btn {
+  background: rgba(255,255,255,0.1);
+  color: white;
+}
+
+@keyframes pop {
+  from {
+    opacity: 0;
+    transform: scale(0.9);
+  }
+
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}  animation: pop 0.25s ease-out;
 }
 
 .scancheck-header {
